@@ -31,6 +31,8 @@ done
 $DTC_BINARY -I dtb -O dts -o dts $i.dtb &> /dev/null && rm $i.dtb
 
 sed -i "s/soc {/soc: soc {/g" "dts"
+sed -i "s/lmh-dcvs-00 {/lmh_0: lmh-dcvs-00 {/g" "dts"
+sed -i "s/lmh-dcvs-01 {/lmh_1: lmh-dcvs-01 {/g" "dts"
 cat "modifier.dtsi" >> "dts"
 sed -i "s/==> dts <==//g" "dts"
 $DTC_BINARY -I dts -O dtb "dts" -o "dtb" &> /dev/null && rm "dts"
