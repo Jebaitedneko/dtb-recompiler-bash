@@ -10,7 +10,7 @@ GRP_BINARY="$CURDIR/grep-aarch64"
 chmod +x "$DTC_BINARY"
 chmod +x "$ZIP_BINARY"
 chmod +x "$GRP_BINARY"
-dd if=/dev/block/bootdevice/by-name/boot of=boot.img
+[[ ! -f boot.img ]] && echo "run get_bootimg.sh in su (su; sh get_bootimg.sh)" && exit
 
 dtb_match_str="Qualcomm Technologies, Inc. SM8150 v2 SoC" # for Poco X3 Pro
 dtb_offsets=$(LANG=C $GRP_BINARY -obUaPHn "\xd0\x0d\xfe\xed" boot.img | cut -f3 -d:)
