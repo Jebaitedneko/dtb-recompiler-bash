@@ -13,7 +13,7 @@ allow storage permissions for tmux
 
 only once (to get boot.img):
 
-`pkg install zip dtc`
+`pkg install zip dtc python`
 
 `su`
 
