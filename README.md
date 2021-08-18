@@ -29,4 +29,4 @@ edit mod.dtsi as needed
 
 to recompile
 
-flashable dtb-mod.zip will be generated in drc
+flashable dtb-mod.zip will be pushed to /sdcard
