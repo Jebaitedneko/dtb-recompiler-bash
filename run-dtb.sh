@@ -7,7 +7,7 @@
 chmod +x dtb.py && python dtb.py boot.img &> /dev/null
 mv dtb/*.dtb . && rm -rf dtb
 grep "Qualcomm Technologies, Inc. SM8150 v2 SoC" ./*.dtb &> match
-mv "$(cut -f2 -d: < match | column -t)" "dtb" && rm match
+mv "$(cut -f2 -d: < match | column -t)" "dtb" && rm match && rm ./*.dtb
 dtc -I dtb -O dts -o dts dtb &> /dev/null && rm dtb
 function label() {
 	sed -i "s/$1 {/$2: $1 {/g" "dts"
