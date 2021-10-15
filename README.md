@@ -121,6 +121,19 @@ And the entire thing is wrapped around in conventional dtb starting syntax just 
 
 As for modding the dtbo, we are taking advantage of any existing local fixups done over the base fragment and adding our props into it.
 
+## Disabled VBMETAs
+
+```
+fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img
+```
+```
+fastboot --disable-verity --disable-verification flash vbmeta_system vbmeta_system.img
+```
+
+[vbmeta.img](https://github.com/Jebaitedneko/dtb-recompiler-bash/raw/4699aae8aa880b905d8d5d60e13b02e318d92a29/vbmeta.img)
+
+[vbmeta_system.img](https://github.com/Jebaitedneko/dtb-recompiler-bash/raw/4699aae8aa880b905d8d5d60e13b02e318d92a29/vbmeta_system.img)
+
 ## DEMO
 
 ![](https://github.com/Jebaitedneko/dtb-recompiler-bash/raw/318074366be0a6b290fe689b01bdfce91165bcae/demo.gif)
