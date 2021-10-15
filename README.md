@@ -4,6 +4,7 @@
 pkg install git zip dtc python
 ```
 ## 2. Allow storage permissions for tmux
+![](https://github.com/Jebaitedneko/dtb-recompiler-bash/raw/318074366be0a6b290fe689b01bdfce91165bcae/demo-tmux-storage-perm.jpg)
 
 ## 3. Clone this repo
 ```
@@ -116,3 +117,7 @@ Fragments are then modified (purely overrides / more additions only) via `__loca
 And the entire thing is wrapped around in conventional dtb starting syntax just like dtb `/ {};`
 
 As for modding the dtbo, we are taking advantage of any existing local fixups done over the base fragment and adding our props into it.
+
+## DEMO
+
+![](https://github.com/Jebaitedneko/dtb-recompiler-bash/raw/318074366be0a6b290fe689b01bdfce91165bcae/demo.gif)
