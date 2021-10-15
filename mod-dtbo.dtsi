@@ -1,0 +1,9 @@
+__local_fixups__ {
+	fragment@FRAG_NUM {
+		__overlay__ {
+			NODE_NAME {
+				PROP;
+			};
+		};
+	};
+};
