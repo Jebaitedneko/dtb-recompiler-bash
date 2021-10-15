@@ -4,10 +4,9 @@
 # TG: @mochi_wwww / GIT: Jebaitedneko
 
 [[ ! -f boot.img ]] && echo -e "Run\n\n\nsu\n\nsh img.sh\n\nexit\n\n\nand then re-run run-dtb.sh"  && exit
-chmod +x dtb.py && python dtb.py boot.img &> /dev/null
-mv dtb/*.dtb . && rm -rf dtb
-grep "Qualcomm Technologies, Inc. SM8150 v2 SoC" ./*.dtb &> match
-mv "$(cut -f2 -d: < match | column -t)" "dtb" && rm match && rm ./*.dtb
+chmod +x dtb.py && python dtb.py boot.img &> /dev/null && mv dtb dtbs
+grep "Qualcomm Technologies, Inc. SM8150 v2 SoC" dtbs/*.dtb &> match
+mv "$(cut -f2 -d: < match | column -t)" "./dtb" && rm match && rm -rf dtbs
 dtc -I dtb -O dts -o dts dtb &> /dev/null && rm dtb
 cp dts dts.old
 function label() {
