@@ -9,16 +9,32 @@ grep "VAYU" dtbs/*.dtb &> match
 mv "$(cut -f2 -d: < match | column -t)" "./dtb" && rm match && rm -rf dtbs
 dtc -I dtb -O dts -o dts dtb &> /dev/null && rm dtb
 cp dts dts.old
+
 function label() {
 	sed -i "s/$1 {/$2: $1 {/g" "dts"
 }
+
 echo -e "\n" >> dts
+
 function get_frag_num() {
 	FRAG_NUM=$(grep -B4 $1 dts | tail -n5 | head -n1 | grep -oE '[0-9]+')
 }
+
+TEMPLATE="
+__local_fixups__ {
+	fragment@FRAG_NUM {
+		__overlay__ {
+			NODE_NAME {
+				PROP;
+			};
+		};
+	};
+};
+"
+
 function push_node() {
 	get_frag_num $1
-	FIXUP=$(cat mod-dtbo.dtsi | sed "s/FRAG_NUM/$FRAG_NUM/g;s/NODE_NAME/$1/g;s/PROP/$(echo -e $2)/g")
+	FIXUP=$(echo $TEMPLATE | sed "s/FRAG_NUM/$FRAG_NUM/g;s/NODE_NAME/$1/g;s/PROP/$(echo -e $2)/g")
 	echo -e "/ { $FIXUP };" >> dts
 }
 push_node "qcom,mdss_dsi_j20s_36_02_0a_dsc_video" '
@@ -29,6 +45,7 @@ push_node "qcom,mdss_dsi_j20s_36_02_0a_dsc_video" '
 	qcom,mdss-dsi-panel-status-value = <0x9c>;
 	qcom,mdss-dsi-panel-status-read-length = <1>;
 '
+
 push_node "qcom,mdss_dsi_j20s_42_02_0b_dsc_video" '
 	qcom,esd-check-enabled;
 	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
@@ -37,6 +54,7 @@ push_node "qcom,mdss_dsi_j20s_42_02_0b_dsc_video" '
 	qcom,mdss-dsi-panel-status-value = <0x9c>;
 	qcom,mdss-dsi-panel-status-read-length = <1>;
 '
+
 sed -i "s/;;/;/g" "dts"
 dtc -I dts -O dtb -o "dtb" "dts" &> /dev/null
 dtc -I dtb -O dts -o "dts.new" "dtb" &> /dev/null
