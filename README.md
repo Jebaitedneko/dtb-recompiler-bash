@@ -1,4 +1,4 @@
-# devicetree patcher for embedded devices (dtb and dtbo supported)
+# Devicetree patcher for embedded devices (dtb and dtbo supported)
 ## 1. Install required packages for tmux
 ```
 pkg install git zip dtc python
@@ -18,7 +18,7 @@ exit
 ```
 ## 5. Modifications and recompiling
 
-## DTB Modding
+#### DTB Modding
 
 Edit mod.dtsi as needed, then recompile with
 
@@ -26,7 +26,7 @@ Edit mod.dtsi as needed, then recompile with
 
 A flashable dtb-mod.zip will be pushed to /sdcard.
 
-## DTBO Modding
+#### DTBO Modding
 
 Modding done via `push_node` function call
 
@@ -35,13 +35,14 @@ push_node "node_name" '
 prop-0;
 prop-1 = <val>;
 prop-2 = [f0 0f];
-prop-3 - "str"
+prop-3 - "str";
 '
 
 ```
 
 node_name must exist within the dtbo, as we are applying a local fixup to node_name.
 
+As with the case of dtbo, you can't perform deletions of nodes and properties.
 
 Otherwise, use dtb modder if the node is defined there.
 
@@ -79,7 +80,9 @@ You should see a similar string. That is the name of the dtb that the kernel use
 
 The `label` function defined in `run-dtb.sh` takes an existing node name as the first argument and labels it with the label you provide as second argument.
 
-This essentially does the following transformation
+## Technical Details [dtb-mod]
+
+It essentially does the following transformation
 
 ```
 / {
@@ -101,3 +104,15 @@ such that when `mod-dtb.dtsi` uses `&label { prop = <val>; };` for example, it m
 	node { prop = <val>; };
 };
 ```
+
+## Technical Details [dtbo-mod]
+
+Firstly, several fragments are generated with pure additions to the base dtb (you can't perform node/property deletions here unlike in dtb)
+
+Here, each node label is put under `__symbols__ {};`, each of which point to different fragments
+
+Fragments are then modified (purely overrides / more additions only) via `__local_fixups__ {};`
+
+And the entire thing is wrapped around in conventional dtb starting syntax just like dtb `/ {};`
+
+As for modding the dtbo, we are taking advantage of any existing local fixups done over the base fragment and adding our props into it.
