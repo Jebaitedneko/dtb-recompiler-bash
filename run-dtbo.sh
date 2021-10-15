@@ -64,10 +64,11 @@ if grep -Fxq avbtool dtbo-stock.img; then
 else
 	echo "Your dtbo has AVB enabled."
 	echo "It is preferred to do the following via fastboot:"
-	echo "fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img "
+	echo "fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img"
 	echo "then"
 	echo "fastboot --disable-verity --disable-verification flash vbmeta_system vbmeta_system.img"
-	echo "where vbmeta.img and vbmeta_system.img are blank vbmeta (provided in repo)"
+	echo "where vbmeta.img and vbmeta_system.img are blank vbmeta (provided below)"
+	echo "https://github.com/Jebaitedneko/dtb-recompiler-bash#disabled-vbmetas"
 	echo "Afterwards, you can flash the dtbo-mod.zip as normal."
 fi
 echo "Done."
