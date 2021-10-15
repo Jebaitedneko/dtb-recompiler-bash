@@ -1,9 +1,23 @@
-# Devicetree patcher for embedded devices (dtb and dtbo supported)
+# DTB & DTBO patcher
+
+Primarily aimed at doing quick dtb/dtbo modifications if you don't have immediate access
+to a build system or pc
+
+Currently, this repo is configured to produce dtb and dtbo for Xiaomi Poco X3 Pro for the following
+
+dtb-mod: GPU OC/UC/UV
+dtbo-mod: Panel ESD Fixup
+
 ## 1. Download tmux and install required packages for tmux
+
+#### Downloads
 
 [Download tmux from here (Play store one is deprecated)](https://f-droid.org/repo/com.termux_117.apk)
 
 [\[BETA\] Latest debug build (extract zip and install apk from within)](https://github.com/termux/termux-app/suites/4044720919/artifacts/102504345)
+
+#### Install the termux pre-requisites for this toolkit with
+
 ```
 pkg install git zip dtc python
 ```
@@ -14,25 +28,39 @@ pkg install git zip dtc python
 ```
 git clone --depth=1 https://github.com/Jebaitedneko/dtb-recompiler-bash drc && cd drc
 ```
-## 4. Get boot.img and dtbo.img (saved as dtbo-stock.img) [to be done just once]
-```
-su
-sh img.sh
-exit
-```
-## 5. Modifications and recompiling
+## 4. Pull boot and dtbo to repo [to be done just once]
 
-#### DTB Modding
+#### Type each command manually one after the other
 
-Edit mod.dtsi as needed, then recompile with
+`su`
+
+`sh img.sh`
+
+`exit`
+
+## 5. Generating the modified dtb/dtbo zips
+
+#### DTB
 
 `./run-dtb.sh`
 
 A flashable dtb-mod.zip will be pushed to /sdcard.
 
+#### DTBO
+
+`./run-dtbo.sh`
+
+A flashable dtbo-mod.zip will be pushed to /sdcard.
+
+## Modifications (for devs)
+
+#### DTB Modding
+
+Edit mod.dtsi as needed
+
 #### DTBO Modding
 
-Modding done via `push_node` function call
+Modding done via `push_node` function call.
 
 ```
 push_node "node_name" '
@@ -48,23 +76,22 @@ node_name must exist within the dtbo, as we are applying a local fixup to node_n
 
 As with the case of dtbo, you can't perform deletions of nodes and properties.
 
+
 Otherwise, use dtb modder if the node is defined there.
 
 
 DTBO Mod method is there primarily for nodes which are absent in the base dtb.
 
 
-Things like sde panels work this way as they were abstracted out from the base dtb for decluttering
+Things like sde panels work this way as they were abstracted out from the base dtb for decluttering.
 
 
 It is to be noted that the second agument be passed within single quotes.
+
+
 Manually escape any double quotes in the properties if you are planning to use double quotes anyways.
 
-Edit `run-dtbo.sh` and add new `push_node` function calls as needed, then recompile with
-
-`./run-dtbo.sh`
-
-A flashable dtbo-mod.zip will be pushed to /sdcard.
+Edit `run-dtbo.sh` and add new `push_node` function calls as needed.
 
 ### Notes for those who want to adapt this for their devices
 
@@ -86,7 +113,7 @@ The `label` function defined in `run-dtb.sh` takes an existing node name as the 
 
 ## Technical Details [dtb-mod]
 
-It essentially does the following transformation
+It essentially does the following transformation:
 
 ```
 / {
@@ -111,13 +138,13 @@ such that when `mod-dtb.dtsi` uses `&label { prop = <val>; };` for example, it m
 
 ## Technical Details [dtbo-mod]
 
-Firstly, several fragments are generated with pure additions to the base dtb (you can't perform node/property deletions here unlike in dtb)
+Firstly, several fragments are generated with pure additions to the base dtb. (you can't perform node/property deletions here unlike in dtb)
 
-Here, each node label is put under `__symbols__ {};`, each of which point to different fragments
+Here, each node label is put under `__symbols__ {};`, each of which point to different fragments.
 
-Fragments are then modified (purely overrides / more additions only) via `__local_fixups__ {};`
+Fragments are then modified (purely overrides / more additions only) via `__local_fixups__ {};`.
 
-And the entire thing is wrapped around in conventional dtb starting syntax just like dtb `/ {};`
+And the entire thing is wrapped around in conventional dtb starting syntax just like dtb `/ {};`.
 
 As for modding the dtbo, we are taking advantage of any existing local fixups done over the base fragment and adding our props into it.
 
