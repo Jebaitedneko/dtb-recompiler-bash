@@ -21,6 +21,22 @@ function push_node() {
 	FIXUP=$(cat mod-dtbo.dtsi | sed "s/FRAG_NUM/$FRAG_NUM/g;s/NODE_NAME/$1/g;s/PROP/$(echo -e $2)/g")
 	echo -e "/ { $FIXUP };" >> dts
 }
+push_node "qcom,mdss_dsi_j20s_36_02_0a_dsc_video" '
+	qcom,esd-check-enabled;
+	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
+	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
+	qcom,mdss-dsi-panel-status-command-state = "dsi_lp_mode";
+	qcom,mdss-dsi-panel-status-value = <0x9c>;
+	qcom,mdss-dsi-panel-status-read-length = <1>;
+'
+push_node "qcom,mdss_dsi_j20s_42_02_0b_dsc_video" '
+	qcom,esd-check-enabled;
+	qcom,mdss-dsi-panel-status-check-mode = "reg_read";
+	qcom,mdss-dsi-panel-status-command = [06 01 00 01 00 00 01 0a];
+	qcom,mdss-dsi-panel-status-command-state = "dsi_lp_mode";
+	qcom,mdss-dsi-panel-status-value = <0x9c>;
+	qcom,mdss-dsi-panel-status-read-length = <1>;
+'
 sed -i "s/;;/;/g" "dts"
 dtc -I dts -O dtb -o "dtb" "dts" &> /dev/null
 dtc -I dtb -O dts -o "dts.new" "dtb" &> /dev/null
