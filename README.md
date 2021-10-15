@@ -71,7 +71,7 @@ A flashable dtbo-mod.zip will be pushed to /sdcard.
 #### 1. Edit DT match string [DTB/DTBO]
 
 #### [DTB]
-Edit [this string](https://github.com/Jebaitedneko/dtb-recompiler-bash/blob/master/run-dtb.sh#L9) to what your device uses.
+Edit [this string](https://github.com/Jebaitedneko/dtb-recompiler-bash/blob/master/run-dtb.sh#L8) to what your device uses.
 
 #### [DTBO]
 Edit [this string](https://github.com/Jebaitedneko/dtb-recompiler-bash/blob/master/run-dtbo.sh#L8) to what your device uses.
