@@ -1,15 +1,18 @@
 # Devicetree patcher for embedded devices (dtb and dtbo supported)
-## 1. Install required packages for tmux
+## 1. Download tmux and install required packages for tmux
+
+[Download tmux from here (Play store one is deprecated)](https://f-droid.org/repo/com.termux_117.apk)
+
+[\[BETA\] Latest debug build (extract zip and install apk from within)](https://github.com/termux/termux-app/suites/4044720919/artifacts/102504345)
 ```
 pkg install git zip dtc python
 ```
 ## 2. Allow storage permissions for tmux
 ![](https://github.com/Jebaitedneko/dtb-recompiler-bash/raw/318074366be0a6b290fe689b01bdfce91165bcae/demo-tmux-storage-perm.jpg)
 
-## 3. Clone this repo
+## 3. Clone this repo & enter into it
 ```
-git clone --depth=1 https://github.com/Jebaitedneko/dtb-recompiler-bash drc
-cd drc
+git clone --depth=1 https://github.com/Jebaitedneko/dtb-recompiler-bash drc && cd drc
 ```
 ## 4. Get boot.img and dtbo.img (saved as dtbo-stock.img) [to be done just once]
 ```
