@@ -5,8 +5,7 @@
 
 [[ ! -f dtbo-stock.img ]] && echo -e "Run\n\n\nsu\n\nsh img.sh\n\nexit\n\n\nand then re-run run-dtbo.sh" && exit
 chmod +x dtb.py && python dtb.py dtbo-stock.img &> /dev/null && mv dtb dtbs
-grep "VAYU" dtbs/*.dtb &> match
-mv "$(cut -f2 -d: < match | column -t)" "./dtb" && rm match && rm -rf dtbs
+mv "$(grep "VAYU" dtbs/*.dtb -l)" "./dtb" && rm -rf dtbs
 dtc -I dtb -O dts -o dts dtb &> /dev/null && rm dtb
 cp dts dts.old
 
