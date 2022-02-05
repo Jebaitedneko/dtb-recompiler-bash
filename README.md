@@ -42,13 +42,13 @@ git clone --depth=1 https://github.com/Jebaitedneko/dtb-recompiler-bash drc && c
 
 #### DTB
 
-`./run-dtb.sh`
+`./dtb.sh`
 
 A flashable dtb-mod.zip will be pushed to /sdcard.
 
 #### DTBO
 
-`./run-dtbo.sh`
+`./dtbo.sh`
 
 A flashable dtbo-mod.zip will be pushed to /sdcard.
 
@@ -91,17 +91,17 @@ It is to be noted that the second agument be passed within single quotes.
 
 Manually escape any double quotes in the properties if you are planning to use double quotes anyways.
 
-Edit `run-dtbo.sh` and add new `push_node` function calls as needed.
+Edit `dtbo.sh` and add new `push_node` function calls as needed.
 
 ### Notes for those who want to adapt this for their devices
 
 #### 1. Edit DT match string [DTB/DTBO]
 
 #### [DTB]
-Edit [this string](https://github.com/Jebaitedneko/dtb-recompiler-bash/blob/master/run-dtb.sh#L8) to what your device uses.
+Edit [this string](https://github.com/Jebaitedneko/dtb-recompiler-bash/blob/master/dtb.sh#L8) to what your device uses.
 
 #### [DTBO]
-Edit [this string](https://github.com/Jebaitedneko/dtb-recompiler-bash/blob/master/run-dtbo.sh#L8) to what your device uses.
+Edit [this string](https://github.com/Jebaitedneko/dtb-recompiler-bash/blob/master/dtbo.sh#L8) to what your device uses.
 
 This can be found out easily by grabbing a DMESG from a normal boot cycle and search for any line with `(DT)` or `MACHINE`.
 
@@ -109,7 +109,7 @@ You should see a similar string. That is the name of the dtb that the kernel use
 
 #### 2. update label arguments [DTB]
 
-The `label` function defined in `run-dtb.sh` takes an existing node name as the first argument and labels it with the label you provide as second argument.
+The `label` function defined in `dtb.sh` takes an existing node name as the first argument and labels it with the label you provide as second argument.
 
 ## Technical Details [dtb-mod]
 
@@ -128,7 +128,7 @@ to
 };
 ```
 
-such that when `mod-dtb.dtsi` uses `&label { prop = <val>; };` for example, it modifies `node {};` and adds `prop = <val>;` to it such that it becomes
+such that when `dtb.dtsi` uses `&label { prop = <val>; };` for example, it modifies `node {};` and adds `prop = <val>;` to it such that it becomes
 
 ```
 / {
