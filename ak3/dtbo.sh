@@ -1,17 +1,17 @@
 # dtb recompiler
 # TG: @mochi_wwww / GIT: Jebaitedneko
 MATCH="VAYU"
-[[ ! -f dtbo-stock.img ]] && echo -e "Run\n\n\nsu\n\nsh img.sh\n\nexit\n\n\nand then re-run run-dtbo.sh" && exit
+[ ! -f dtbo-stock.img ] && echo -e "Run\n\n\nsu\n\nsh img.sh\n\nexit\n\n\nand then re-run run-dtbo.sh" && exit
 ./extract-dtb.sh "dtbo-stock.img" "$MATCH"
 cp dts dts.old
 
-function label() {
+label() {
 	sed -i "s/$1 {/$2: $1 {/g" "dts"
 }
 
 echo -e "\n" >> dts
 
-function get_frag_num() {
+get_frag_num() {
 	FRAG_NUM=$(grep -B4 $1 dts | tail -n5 | head -n1 | grep -oE '[0-9]+')
 }
 
@@ -27,7 +27,7 @@ __local_fixups__ {
 };
 "
 
-function push_node() {
+push_node() {
 	get_frag_num $1
 	FIXUP=$(echo $TEMPLATE | sed "s/FRAG_NUM/$FRAG_NUM/g;s/NODE_NAME/$1/g;s/PROP/$(echo -e $2)/g")
 	echo -e "/ { $FIXUP };" >> dts

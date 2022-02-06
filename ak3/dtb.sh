@@ -1,10 +1,10 @@
 # dtb recompiler
 # TG: @mochi_wwww / GIT: Jebaitedneko
 MATCH="Qualcomm Technologies, Inc. SM8150 v2 SoC"
-[[ ! -f boot.img ]] && echo -e "Run\n\n\nsu\n\nsh img.sh\n\nexit\n\n\nand then re-run run-dtb.sh"  && exit
+[ ! -f boot.img ] && echo -e "Run\n\n\nsu\n\nsh img.sh\n\nexit\n\n\nand then re-run run-dtb.sh"  && exit
 ./extract-dtb.sh "boot.img" "$MATCH"
 cp dts dts.old
-function label() {
+label() {
 	sed -i "s/$1 {/$2: $1 {/g" "dts"
 }
 label "soc" "soc"
