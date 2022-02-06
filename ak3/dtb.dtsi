@@ -1,0 +1,144 @@
+&gpu_opp {
+
+	opp-692000000 {
+		opp-hz = /bits/ 64 <692000000>;
+		opp-microvolt = <194>; // MIN
+	};
+
+	opp-675000000 {
+		opp-hz = /bits/ 64 <675000000>;
+		opp-microvolt = <194>; // MIN
+	};
+
+	opp-585000000 {
+		opp-hz = /bits/ 64 <585000000>;
+		opp-microvolt = <125>; // MIN
+	};
+
+	opp-499200000 {
+		opp-hz = /bits/ 64 <499200000>;
+		opp-microvolt = <70>; // MIN
+	};
+
+	opp-427000000 {
+		opp-hz = /bits/ 64 <427000000>;
+		opp-microvolt = <50>; // MIN
+	};
+
+	opp-345000000 {
+		opp-hz = /bits/ 64 <345000000>;
+		opp-microvolt = <26>; // MIN
+	};
+
+	opp-257000000 {
+		opp-hz = /bits/ 64 <257000000>;
+		opp-microvolt = <20>; // MIN
+	};
+
+	opp-140000000 {
+		opp-hz = /bits/ 64 <140000000>;
+		opp-microvolt = <2>; // MIN
+	};
+};
+
+&gpu_pwrlvl {
+
+	qcom,initial-pwrlevel = <6>;
+
+	qcom,gpu-pwrlevel@0 {
+		reg = <0>;
+		qcom,gpu-freq = <692000000>;
+		qcom,bus-freq = <11>;
+		qcom,bus-min = <11>;
+		qcom,bus-max = <11>;
+	};
+
+	qcom,gpu-pwrlevel@1 {
+		reg = <1>;
+		qcom,gpu-freq = <675000000>;
+		qcom,bus-freq = <10>;
+		qcom,bus-min = <9>;
+		qcom,bus-max = <11>;
+	};
+
+	qcom,gpu-pwrlevel@2 {
+		reg = <2>;
+		qcom,gpu-freq = <499200000>;
+		qcom,bus-freq = <9>;
+		qcom,bus-min = <8>;
+		qcom,bus-max = <11>;
+	};
+
+	qcom,gpu-pwrlevel@3 {
+		reg = <3>;
+		qcom,gpu-freq = <427000000>;
+		qcom,bus-freq = <6>;
+		qcom,bus-min = <5>;
+		qcom,bus-max = <9>;
+	};
+
+	qcom,gpu-pwrlevel@4 {
+		reg = <4>;
+		qcom,gpu-freq = <345000000>;
+		qcom,bus-freq = <4>;
+		qcom,bus-min = <3>;
+		qcom,bus-max = <5>;
+	};
+
+	qcom,gpu-pwrlevel@5 {
+		reg = <5>;
+		qcom,gpu-freq = <257000000>;
+		qcom,bus-freq = <3>;
+		qcom,bus-min = <2>;
+		qcom,bus-max = <4>;
+	};
+
+	qcom,gpu-pwrlevel@6 {
+		reg = <6>;
+		qcom,gpu-freq = <140000000>;
+		qcom,bus-freq = <2>;
+		qcom,bus-min = <1>;
+		qcom,bus-max = <3>;
+	};
+
+	/* DO NOT TOUCH THIS */
+	qcom,gpu-pwrlevel@7 {
+		reg = <7>;
+		qcom,gpu-freq = <0>;
+		qcom,bus-freq = <0>;
+		qcom,bus-min = <0>;
+		qcom,bus-max = <0>;
+	};
+};
+
+&lmh_0 {
+
+	polling-delay-passive = <0>;
+	polling-delay = <0>;
+	thermal-governor = "user_space";
+
+	trips {
+
+		active-config {
+			temperature = <98000>;
+			hysteresis = <25000>;
+			type = "passive";
+		};
+	};
+};
+
+&lmh_1 {
+
+	polling-delay-passive = <0>;
+	polling-delay = <0>;
+	thermal-governor = "user_space";
+
+	trips {
+
+		active-config {
+			temperature = <98000>;
+			hysteresis = <25000>;
+			type = "passive";
+		};
+	};
+};
