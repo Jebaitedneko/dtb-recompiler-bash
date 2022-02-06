@@ -2,7 +2,34 @@
 # TG: @mochi_wwww / GIT: Jebaitedneko
 MATCH="VAYU"
 [ ! -f dtbo-stock.img ] && echo -e "Run\n\n\nsu\n\nsh img.sh\n\nexit\n\n\nand then re-run run-dtbo.sh" && exit
-./extract-dtb.sh "dtbo-stock.img" "$MATCH"
+
+if [ $(env | grep ANDROID_DATA | wc -c) -gt 0 ]; then
+    export MAGISKBOOT="$(pwd)/tools/magiskboot"
+    export MKDTIMG="$(pwd)/mkdtimg-aarch64"
+    export DTC="$(pwd)/dtc-aarch64 -q"
+else
+    export MAGISKBOOT="$(pwd)/magiskboot-x86"
+    export MKDTIMG="$(pwd)/mkdtimg-x86"
+    export DTC="$(which dtc) -q"
+fi
+
+dir_check() {
+    [ -d dtbs ] && rm -rf dtbs; mkdir dtbs || mkdir dtbs
+}
+
+common() {
+    ( cd dtbs; ls -1 * | while read f; do $DTC -q -I dtb -O dts "$f" -o $(echo "$f" | sed -E "s/.dtb//g;s/dtbos.([0-9]+)/\1/g").dts; done; rm *dtb* )
+    mv "$(grep -r "$2" -l dtbs)" "./dts" && rm -rf dtbs
+}
+
+unpack_dtbo() {
+    dir_check
+    $MKDTIMG dump "$1" -b dtbos &> /dev/null
+    [ -f dtbos.0 ] && mv dtbos* dtbs
+    common "$1" "$2"
+}
+
+unpack_dtbo "dtbo-stock.img" "$MATCH"
 cp dts dts.old
 
 label() {

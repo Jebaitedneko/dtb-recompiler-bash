@@ -1,3 +1,4 @@
-sh dtbo.sh
-sh dtb.sh
+./img.sh
+./dtbo.sh
+./dtb.sh
 unset MAGISKBOOT MKDTIMG DTC
