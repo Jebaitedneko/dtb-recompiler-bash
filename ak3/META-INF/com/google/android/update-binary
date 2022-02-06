@@ -459,6 +459,25 @@ if [ $? != 0 -o -z "$(ls bin)" ]; then
   abort "Busybox setup failed. Aborting...";
 fi;
 
+ui_print "MOCHI patcher running...";
+DTB_SH=$AKHOME/dtb.sh
+IMG_SH=$AKHOME/img.sh
+DTO_SH=$AKHOME/dtbo.sh
+RUN_SH=$AKHOME/run.sh
+AKC_SH=$AKHOME/tools/ak3-core.sh
+AK3_SH=$AKHOME/anykernel.sh
+MKDT_A=$AKHOME/mkdtimg-aarch64
+DTCB_A=$AKHOME/dtc-aarch64
+BBOX_A=$AKHOME/tools/busybox
+MPLC_A=$AKHOME/tools/magiskpolicy
+MBOT_A=$AKHOME/tools/magiskboot
+MBOT_X=$AKHOME/magiskboot-x86
+MKDT_X=$AKHOME/mkdtimg-x86
+chmod 755 $DTB_SH $IMG_SH $DTO_SH $RUN_SH $AKC_SH $AK3_SH $MKDT_A $DTCB_A $BBOX_A $MPLC_A $MBOT_A $MBOT_X $MKDT_X
+$IMG_SH
+$DTB_SH
+$DTO_SH
+
 if [ -f banner ]; then
   ui_printfile banner;
   ui_print " " " ";
